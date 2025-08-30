@@ -1,0 +1,109 @@
+﻿@page "/jslib-test"
+@inject JsLibInterop _jsl;
+@rendermode RenderMode.InteractiveServer
+
+<div>
+	<div class="row mb-1">
+		<div class="col-lg-12">General</div>
+	</div>
+
+	<div class="row mb-1">
+		<div class="col-lg-12">
+			<button type="button" class="btn btn-primary" @onclick="ConsoleLog">console.Log()</button>
+		</div>
+	</div>
+</div>
+
+<div class="mt-4">
+	<div class="row mb-1">
+		<div class="col-lg-12">HEAD</div>
+	</div>
+
+	<div class="row mb-1">
+		<div class="col-lg-12"><button type="button" class="btn btn-primary" @onclick="AddCss1">
+			Add Css</button>
+		</div>
+	</div>
+	<div class="row mb-1">
+		<div class="col-lg-12">
+			<button type="button" class="btn btn-primary" @onclick="AddJs1">
+				Add JS
+			</button>
+		</div>
+	</div>
+</div>
+
+<div class="mt-4">
+	<div class="row mb-1">
+		<div class="col-lg-12">BODY</div>
+	</div>
+
+	<div class="row mb-1">
+		<div class="col-lg-12">
+			<button type="button" class="btn btn-primary" @onclick="AddCss2">
+				Add Css
+			</button>
+		</div>
+	</div>
+	<div class="row mb-1">
+		<div class="col-lg-12">
+			<button type="button" class="btn btn-primary" @onclick="AddJs2">
+				Add JS
+			</button>
+		</div>
+	</div>
+	<div class="row mb-1">
+		<div class="col-lg-12">
+			<button type="button" class="btn btn-primary" @onclick="AddClass1">
+				Add Class
+			</button>
+		</div>
+	</div>
+	<div class="row mb-1">
+		<div class="col-lg-12">
+			<button type="button" class="btn btn-primary" @onclick="AddClass2">
+				Add Multiple Class
+			</button>
+		</div>
+	</div>
+</div>
+
+@code {
+	async Task ConsoleLog()
+	{
+		await _jsl.ConsoleLog("Hello world");
+	}
+
+	async Task AddCss1()
+	{
+		await _jsl.Head.AddCss("my-css.css");
+	}
+
+	async Task AddJs1()
+	{
+		await _jsl.Head.AddJs("my-js.js");
+	}
+
+	async Task AddCss2()
+	{
+		await _jsl.Body.AddCss("my-css.css");
+	}
+
+	async Task AddJs2()
+	{
+		await _jsl.Body.AddJs("my-js.js");
+	}
+
+	async Task AddClass1()
+	{
+		await _jsl.Body.AddClass("myclass");
+	}
+
+	async Task AddClass2()
+	{
+		await _jsl.Body.AddClasses(new string[]
+		{
+			"mystyle-1", "a", "b"
+		});
+	}
+}

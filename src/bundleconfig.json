@@ -1,0 +1,8 @@
+[
+  {
+    "outputFileName": "wwwroot/blazor-jslib.min.js",
+    "inputFiles": [
+      "js-src/blazor-jslib.js"
+    ]
+  }
+]
