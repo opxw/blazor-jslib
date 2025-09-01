@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
 namespace Opx.Blazor.JsLibDOM
@@ -54,8 +55,32 @@ namespace Opx.Blazor.JsLibDOM
                 return;
 
             var v = await moduleTask.Value;
-            await v.InvokeVoidAsync("modAttributeBy", opr.ElementBy, opr.Identifier, opr.Name, opr.Value, opr.ShowConsoleLog);
+            await v.InvokeVoidAsync("modAttributeBy", (int)opr.Operation, (int)opr.ElementBy ,opr.Identifier, opr.Name, opr.Value, opr.ShowConsoleLog);
         }
+
+        public async Task ModifyContent(JsLibDOMContentOperation opr)
+        {
+            if (opr.Identifier == null)
+                return;
+
+                var v = await moduleTask.Value;
+            await v.InvokeVoidAsync("elementAddContent", (int)opr.Operation, (int)opr.ElementBy, opr.Identifier, (int)opr.ContentType,
+                opr.Content, opr.ShowConsoleLog);
+        }
+
+        public async ValueTask<T> ElementGetValue<T>(DOMElementBy elementBy, string identifier)
+        {
+            var result = default(T);
+
+			var v = await moduleTask.Value;
+			return await v.InvokeAsync<T>("elementGetValue", (int)elementBy, identifier);
+		}
+
+		public async Task ElementSetValue(DOMElementBy elementBy, string identifier, object value)
+		{
+			var v = await moduleTask.Value;
+			await v.InvokeVoidAsync("elementSetValue", (int)elementBy, identifier, value);
+		}
 
 		public async ValueTask DisposeAsync()
         {

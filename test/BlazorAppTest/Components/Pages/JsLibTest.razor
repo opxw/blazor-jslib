@@ -97,6 +97,40 @@
 			</button>
 		</div>
 	</div>
+
+	<div class="row mb-1">
+		<div class="col-lg-12">
+			<button type="button" class="btn btn-primary" @onclick="SetAtrribute1">
+				SetAttribute By ID
+			</button>
+			<button type="button" class="btn btn-danger" @onclick="RemoveAtrribute1">
+				RemoveAttribute By ID
+			</button>
+		</div>
+	</div>
+
+	<div class="row mb-1">
+		<div class="col-lg-12">
+			<button type="button" class="btn btn-primary" @onclick="AddContent1">
+				AddContent By ID
+			</button>
+			<button type="button" class="btn btn-danger" @onclick="RemoveContent1">
+				RemoveContent By ID
+			</button>
+		</div>
+	</div>
+
+	<div class="row mb-1">
+		<div class="col-lg-12">
+			<button type="button" class="btn btn-primary" @onclick="AddHTMLContent1">
+				AddHTMLContent By ID
+			</button>
+			<button type="button" class="btn btn-danger" @onclick="RemoveHTMLContent1">
+				RemoveHTMLContent By ID
+			</button>
+		</div>
+	</div>
+
 	<div class="row mb-1">
 		<div class="col-lg-12">
 			<button type="button" class="btn btn-primary" @onclick="AddClassByName">
@@ -109,6 +143,25 @@
 			</button>
 		</div>
 	</div>
+
+	<div class="row mb-1">
+		<div class="col-lg-12">
+			<form class="form-control">
+				<input type="text" id="myId" name="myName" />
+			</form>
+		</div>
+		<div class="col-lg-12">
+			<button type="button" class="btn btn-primary" @onclick="GetValue1">
+				Get Value
+			</button>
+			valueById is @valueById
+			<button type="button" class="btn btn-primary" @onclick="SetValue1">
+				Set Value
+			</button>
+		</div>
+	</div>
+
+	
 </div>
 
 @code {
@@ -181,5 +234,46 @@
 	async Task RemoveClassByName()
 	{
 		await _jsl.Elements.ByName("test-name").RemoveClass("class-in-test-name");
+	}
+
+	async Task SetAtrribute1()
+	{
+		await _jsl.Elements.ById("test-id").SetAttribute("my-attribute", "my-value");
+	}
+
+	async Task RemoveAtrribute1()
+	{
+		await _jsl.Elements.ById("test-id").RemoveAttribute("my-attribute");
+	}
+
+	async Task AddContent1()
+	{
+		await _jsl.Elements.ById("test-id").AddContent("this is text content <b>bold</b>");
+	}
+
+	async Task RemoveContent1()
+	{
+		await _jsl.Elements.ById("test-id").RemoveContent();
+	}
+
+	async Task AddHTMLContent1()
+	{
+		await _jsl.Elements.ById("test-id").AddHtmlContent("this is HTNL content <b>bold</b>");
+	}
+
+	async Task RemoveHTMLContent1()
+	{
+		await _jsl.Elements.ById("test-id").RemoveHtmlContent();
+	}
+
+	private string valueById;
+	async Task GetValue1()
+	{
+		valueById = await _jsl.Elements.ById("myId").GetValue<string>();
+	}
+
+	async Task SetValue1()
+	{
+		await _jsl.Elements.ById("myId").SetValue("Hello");
 	}
 }

@@ -25,4 +25,16 @@
 		Set = 0,
 		Remove
 	}
+
+	public enum DOMContentOperation
+	{
+		Add = 0,
+		Remove
+	}
+
+	public enum DOMContentType
+	{
+		Text = 0,
+		InnerHTML
+	}
 }

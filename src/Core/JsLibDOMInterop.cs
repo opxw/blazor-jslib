@@ -23,7 +23,7 @@ namespace Opx.Blazor.JsLibDOM
 		public JsLibDOMBody Body => _body;
 		public JsLibDOMElements Elements => _elements;
 
-		public async Task ConsoleLog(string msg)
+		public async Task ConsoleLog(object msg)
 		{
 			var v = await _core.GetInvoker();
 			await v.InvokeVoidAsync("consoleLog", msg, true);

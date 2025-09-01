@@ -38,17 +38,12 @@ export function modClassBy(op, kind, identifier, className, showLog) {
     switch (kind) {
         case 1:
             var els = document.getElementsByName(identifier);
-            if (op == 0) {
-                for (let i = 0; i < els.length; i++) {
-                    const element = els[i];
+            for (let i = 0; i < els.length; i++) {
+                const element = els[i];
+                if (op == 0)
                     element.classList.add(className);
-                }
-            }
-            else {
-                for (let i = 0; i < els.length; i++) {
-                    const element = els[i];
+                else
                     element.classList.remove(className);
-                }
             }
             break;
         case 2:
@@ -77,17 +72,12 @@ export function modClassesBy(op, kind, identifier, classNames, showLog) {
     switch (kind) {
         case 1:
             var els = document.getElementsByName(identifier);
-            if (op == 0) {
-                for (let i = 0; i < els.length; i++) {
-                    const element = els[i];
+            for (let i = 0; i < els.length; i++) {
+                const element = els[i];
+                if (op == 0)
                     element.classList.add(...classNames);
-                }
-            }
-            else {
-                for (let i = 0; i < els.length; i++) {
-                    const element = els[i];
+                else
                     element.classList.remove(...classNames);
-                }
             }
             break;
         case 2:
@@ -115,20 +105,13 @@ export function modClassesBy(op, kind, identifier, classNames, showLog) {
 export function modAttributeBy(op, kind, identifier, name, value, showLog) {
     switch (kind) {
         case 1:
-            if (op == 0) {
-                var els = document.getElementsByName(identifier);
-                for (let i = 0; i < els.length; i++) {
-                    const element = els[i];
-                    // Set the attribute
+            var els = document.getElementsByName(identifier);
+            for (let i = 0; i < els.length; i++) {
+                const element = els[i];
+                if (op == 0)
                     element.setAttribute(name, value);
-                }
-            }
-            else {
-                var els = document.getElementByName(identifier);
-                for (let i = 0; i < els.length; i++) {
-                    const element = els[i];
+                else
                     element.removeAttribute(name);
-                }
             }
             break;
         case 2:
@@ -150,7 +133,73 @@ export function modAttributeBy(op, kind, identifier, name, value, showLog) {
                 document.getElementById(identifier).removeAttribute(name);
     }
 
-    consoleLog('attribute ${name} added to ${identifier}');
+    consoleLog('attribute ${name} added to ${identifier}', showLog);
+}
+
+export function elementAddContent(op, kind, identifier, contentType, content, showLog) {
+    switch (kind) {
+        case 1:
+            var els = document.getElementsByName(identifier);
+            for (let i = 0; i < els.length; i++) {
+                const element = els[i];
+                if (contentType == 0)
+                    element.textContent = op == 0 ? content : '';
+                else
+                    element.innerHTML = op == 0 ? content : '';
+            }
+            break;
+        case 2:
+            var el = document.getElementsByClassName(identifier);
+            if (contentType == 0)
+                el.textContent = op == 0 ? content : '';
+            else
+                el.innerHTML = op == 0 ? content : '';
+            break;
+        case 3:
+            var el = document.getElementsByTagName(identifier);
+            if (contentType == 0)
+                el.textContent = op == 0 ? content : '';
+            else
+                el.innerHTML = op == 0 ? content : '';
+            break;
+        default:
+            var el = document.getElementById(identifier);
+            if (contentType == 0)
+                el.textContent = op == 0 ? content : '';
+            else
+                el.innerHTML = op == 0 ? content : '';
+    }
+
+    consoleLog('content added', showLog);
+}
+
+export function elementGetValue(kind, identifier) {
+    switch (kind) {
+        case 1:
+            return document.getElementsByName(identifier)[0].value;
+        case 2:
+            return document.getElementsByClassName(identifier).value;
+        case 3:
+            return document.getElementsByTagName(identifer).value;
+        default:
+            return document.getElementById(identifier).value;
+    }
+}
+
+export function elementSetValue(kind, identifier, value) {
+    switch (kind) {
+        case 1:
+            document.getElementsByName(identifier)[0].value = value;
+            break;
+        case 2:
+            document.getElementsByClassName(identifier).value = value;
+            break;
+        case 3:
+            document.getElementsByTagName(identifer).value = value;
+            break;
+        default:
+            document.getElementById(identifier).value = value;
+    }
 }
 
 // body
