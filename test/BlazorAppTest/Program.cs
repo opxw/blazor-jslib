@@ -1,5 +1,5 @@
 using BlazorAppTest.Components;
-using Opx.Blazor.JsLib;
+using Opx.Blazor.JsLibDOM;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
 	.AddInteractiveServerComponents();
 
-builder.Services.AddInteractiveBlazorJsLib(new JsLibGlobalOptions()
+builder.Services.AddInteractiveBlazorJsLibDOM(new JsLibDOMGlobalOptions()
 {
 	ShowConsoleLog = true
 });

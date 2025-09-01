@@ -1,6 +1,9 @@
 ﻿@page "/jslib-test"
-@inject JsLibInterop _jsl;
+@using Opx.Blazor.JsLibDOM
+@inject JsLibDOMInterop _jsl;
 @rendermode RenderMode.InteractiveServer
+
+
 
 <div>
 	<div class="row mb-1">
@@ -57,12 +60,52 @@
 			<button type="button" class="btn btn-primary" @onclick="AddClass1">
 				Add Class
 			</button>
+			<button type="button" class="btn btn-danger" @onclick="RemoveClass1">
+				Remove Class
+			</button>
 		</div>
 	</div>
 	<div class="row mb-1">
 		<div class="col-lg-12">
 			<button type="button" class="btn btn-primary" @onclick="AddClass2">
 				Add Multiple Class
+			</button>
+			<button type="button" class="btn btn-danger" @onclick="RemoveClass2">
+				Remove Multiple Class
+			</button>
+		</div>
+	</div>
+</div>
+
+<div class="mt-4">
+	<div class="row mb-1">
+		<div class="col-lg-12">ELEMENTS</div>
+	</div>
+
+	<div>Select & Right click -> inspect</div>
+	<div id="test-id"></div>
+	<div class="test-class"></div>
+	<div name="test-name"></div>
+
+	<div class="row mb-1">
+		<div class="col-lg-12">
+			<button type="button" class="btn btn-primary" @onclick="AddClassById">
+				AddClass By ID
+			</button>
+			<button type="button" class="btn btn-danger" @onclick="RemoveClassById">
+				RemoveClass By ID
+			</button>
+		</div>
+	</div>
+	<div class="row mb-1">
+		<div class="col-lg-12">
+			<button type="button" class="btn btn-primary" @onclick="AddClassByName">
+				AddClass By Name
+			</button>
+		</div>
+		<div class="col-lg-12">
+			<button type="button" class="btn btn-primary" @onclick="RemoveClassByName">
+				RemoveClass By Name
 			</button>
 		</div>
 	</div>
@@ -99,11 +142,44 @@
 		await _jsl.Body.AddClass("myclass");
 	}
 
+	async Task RemoveClass1()
+	{
+		await _jsl.Body.RemoveClass("myclass");
+	}
+
 	async Task AddClass2()
 	{
 		await _jsl.Body.AddClasses(new string[]
 		{
 			"mystyle-1", "a", "b"
 		});
+	}
+
+	async Task RemoveClass2()
+	{
+		await _jsl.Body.RemoveClasses(new string[]
+		{
+			"mystyle-1", "a", "b"
+		});
+	}
+
+	async Task AddClassById()
+	{
+		await _jsl.Elements.ById("test-id").AddClass("class-in-test-id");
+	}
+
+	async Task RemoveClassById()
+	{
+		await _jsl.Elements.ById("test-id").RemoveClass("class-in-test-id");
+	}
+
+	async Task AddClassByName()
+	{
+		await _jsl.Elements.ByName("test-name").AddClass("class-in-test-name");
+	}
+
+	async Task RemoveClassByName()
+	{
+		await _jsl.Elements.ByName("test-name").RemoveClass("class-in-test-name");
 	}
 }
