@@ -1,4 +1,5 @@
-﻿using Microsoft.JSInterop;
+﻿using FastEnumUtility;
+using Microsoft.JSInterop;
 
 namespace Opx.Blazor.JsLibDOM
 {
@@ -26,7 +27,7 @@ namespace Opx.Blazor.JsLibDOM
 		public async Task ConsoleLog(object msg)
 		{
 			var v = await _core.GetInvoker();
-			await v.InvokeVoidAsync("consoleLog", msg, true);
+			await v.InvokeVoidAsync(FuncMap.ConsoleLog.GetLabel(), msg);
 		}
 	}
 }

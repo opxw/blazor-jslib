@@ -1,14 +1,28 @@
-export function consoleLog(msg, showLog) {
-    if (showLog) {
+
+// console.log
+export function fg0(msg) {
+    if (msg === null || msg.match(/^ *$/) !== null) {
         console.log(msg);
     }
 }
 
-export function addJs(url, appendTo, isAsync, showLog) {
+
+/** HTML DOCUMENT */
+export function fd0(op, name, value, log) {
+    var doc = document;
+    if (op == 0)
+        doc.setAttribute(name, value);
+    else
+        doc.removeAttribute(name);
+
+    fg0(log);
+}
+
+export function fd1(url, appendTo, isAsync, log) {
     const script = document.createElement('script');
     script.type = 'text/javascript';
     script.src = url;
-    script.async = isAsync; // Load asynchronously
+    script.async = isAsync;
 
     if (appendTo == 0) {
         document.head.appendChild(script);
@@ -16,9 +30,10 @@ export function addJs(url, appendTo, isAsync, showLog) {
         document.body.appendChild(script);
     }
 
-    consoleLog('js ${url} added to (${appendTo})');
+    fg0(log);
 }
-export function addCss(url, appendTo, showLog) {
+
+export function fd2(url, appendTo, log) {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
     link.href = url;
@@ -29,12 +44,52 @@ export function addCss(url, appendTo, showLog) {
         document.body.appendChild(link);
     }
 
-    consoleLog('css ${url} added to (${appendTo})', showLog);
- }
+    fg0(log);
+}
 
- // elements
+/** HEAD */
 
-export function modClassBy(op, kind, identifier, className, showLog) {
+export function fh0(name, content, log) {
+    const meta = document.createElement('meta');
+    meta.name = name;
+
+    if (content != null)
+        meta.content = content;
+
+    document.head.appendChild(meta);
+
+    fg0(log);
+}
+
+/** BODY */
+
+export function fb0(className, log) {
+    document.body.classList.add(className);
+    fg0(log);
+}
+export function fb1(classNames, log) {
+    document.body.classList.add(...classNames);
+    fg0(log);
+}
+export function fb2(className, log) {
+    document.body.classList.remove(className);
+    fg0(log);
+}
+export function fb3(classNames, log) {
+    document.body.classList.remove(...classNames);
+    fg0(log);
+}
+export function fb4(op, name, value, log) {
+    var el = document.body;
+    if (op == 0)
+        el.setAttribute(name, value);
+    else
+        el.removeAttribute(name);
+    fg0(log);
+}
+
+/** ELEMENTS */
+export function fe0(op, kind, identifier, className, log) {
     switch (kind) {
         case 1:
             var els = document.getElementsByName(identifier);
@@ -64,11 +119,10 @@ export function modClassBy(op, kind, identifier, className, showLog) {
             else
                 document.getElementById(identifier).classList.remove(className);
     }
-
-    consoleLog('class:${className} operation:{op} kind:${kind}', showLog);
+    fg0(log);
 }
 
-export function modClassesBy(op, kind, identifier, classNames, showLog) {
+export function fe1(op, kind, identifier, classNames, log) {
     switch (kind) {
         case 1:
             var els = document.getElementsByName(identifier);
@@ -98,11 +152,10 @@ export function modClassesBy(op, kind, identifier, classNames, showLog) {
             else
                 document.getElementById(identifier).classList.remove(...classNames);
     }
-
-    consoleLog('class:${classNames} operation:${op} kind:${kind}', showLog);
+    fg0(log);
 }
 
-export function modAttributeBy(op, kind, identifier, name, value, showLog) {
+export function fe2(op, kind, identifier, name, value, log) {
     switch (kind) {
         case 1:
             var els = document.getElementsByName(identifier);
@@ -132,11 +185,10 @@ export function modAttributeBy(op, kind, identifier, name, value, showLog) {
             else
                 document.getElementById(identifier).removeAttribute(name);
     }
-
-    consoleLog('attribute ${name} added to ${identifier}', showLog);
+    fg0(log);
 }
 
-export function elementAddContent(op, kind, identifier, contentType, content, showLog) {
+export function fe3(op, kind, identifier, contentType, content, log) {
     switch (kind) {
         case 1:
             var els = document.getElementsByName(identifier);
@@ -169,11 +221,10 @@ export function elementAddContent(op, kind, identifier, contentType, content, sh
             else
                 el.innerHTML = op == 0 ? content : '';
     }
-
-    consoleLog('content added', showLog);
+    fg0(log);
 }
 
-export function elementGetValue(kind, identifier) {
+export function fe4(kind, identifier, log) {
     switch (kind) {
         case 1:
             return document.getElementsByName(identifier)[0].value;
@@ -184,9 +235,10 @@ export function elementGetValue(kind, identifier) {
         default:
             return document.getElementById(identifier).value;
     }
+    fg0(log);
 }
 
-export function elementSetValue(kind, identifier, value) {
+export function fe5(kind, identifier, value, log) {
     switch (kind) {
         case 1:
             document.getElementsByName(identifier)[0].value = value;
@@ -200,24 +252,6 @@ export function elementSetValue(kind, identifier, value) {
         default:
             document.getElementById(identifier).value = value;
     }
+    fg0(log);
 }
 
-// body
-
-export function addClassToBody(className, showLog) {
-    document.body.classList.add(className);
-    consoleLog('class ${className} added to body', showLog);
-}
-export function addClassesToBody(classNames, showLog) {
-    document.body.classList.add(...classNames);
-    consoleLog('class ${classNames} added to body', showLog);
-}
-
-export function remClassFromBody(className, showLog) {
-    document.body.classList.remove(className);
-    consoleLog('class ${className} added to body', showLog);
-}
-export function remClassesFromBody(classNames, showLog) {
-    document.body.classList.remove(...classNames);
-    consoleLog('class ${classNames} added to body', showLog);
-}

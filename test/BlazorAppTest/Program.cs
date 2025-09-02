@@ -9,7 +9,7 @@ builder.Services.AddRazorComponents()
 
 builder.Services.AddInteractiveBlazorJsLibDOM(new JsLibDOMGlobalOptions()
 {
-	ShowConsoleLog = true
+	ShowExecutionLog = true
 });
 
 var app = builder.Build();

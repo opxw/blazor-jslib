@@ -1,15 +1,8 @@
-using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using Opx.Blazor.JsLibDOM.Utils;
 
 namespace Opx.Blazor.JsLibDOM
 {
-    // This class provides an example of how JavaScript functionality can be wrapped
-    // in a .NET class for easy consumption. The associated JavaScript module is
-    // loaded on demand when first needed.
-    //
-    // This class can be registered as scoped DI service and then injected into Blazor
-    // components for use.
-
     public class JsLibDOMInteropCore : IAsyncDisposable
     {
         private readonly Lazy<Task<IJSObjectReference>> moduleTask;
@@ -26,60 +19,72 @@ namespace Opx.Blazor.JsLibDOM
             return await module.InvokeAsync<string>("showPrompt", message);
         }
 
-        async Task ModifyClassBy(DOMClassOperation opr, DOMElementBy el, string identifier, string className, bool showLog)
+        async Task ModElementClassBy(DOMClassOperation opr, DOMElementBy el, string identifier, string className, bool showLog)
         {
             var v = await moduleTask.Value;
-            await v.InvokeVoidAsync("modClassBy", (int)opr, (int)el, identifier, className, showLog);
+            var log = showLog ? FuncMap.ElementModifyClass.ToString() : null;
+            await v.InvokeVoidAsync(FuncMap.ElementModifyClass.fn(), (int)opr, (int)el, identifier, className, log);
         }
 
-		async Task ModifyClassesBy(DOMClassOperation opr, DOMElementBy el, string identifier, string[] classNames, bool showLog)
+		async Task ModElementClassesBy(DOMClassOperation opr, DOMElementBy el, string identifier, string[] classNames, bool showLog)
 		{
 			var v = await moduleTask.Value;
-			await v.InvokeVoidAsync("modClassesBy", (int)opr, (int)el, identifier, classNames, showLog);
+			var log = showLog ? FuncMap.ElementModifyClasses.ToString() : null;
+			await v.InvokeVoidAsync(FuncMap.ElementModifyClasses.fn(), (int)opr, (int)el, identifier, classNames, log);
 		}
 
-        public async Task ModifyClass(JsLibDOMClassOperation opr)
+        public async Task ModifyElementClass(JsLibDOMClassOperation opr)
         {
             if (opr.Identifier == null)
                 return;
+
+            var log = "";
 
             if (!string.IsNullOrWhiteSpace(opr.ClassName))
-                await ModifyClassBy(opr.Operation, opr.ElementBy, opr.Identifier, opr.ClassName, opr.ShowConsoleLog);
+            {
+                await ModElementClassBy(opr.Operation, opr.ElementBy, opr.Identifier, opr.ClassName, opr.ShowExecutionLog);
+            }
             else
-                await ModifyClassesBy(opr.Operation, opr.ElementBy, opr.Identifier, opr.ClassNames, opr.ShowConsoleLog);
+            {
+				await ModElementClassesBy(opr.Operation, opr.ElementBy, opr.Identifier, opr.ClassNames, opr.ShowExecutionLog);
+            }
         }
 
-        public async Task ModifyAttribute(JsLibDOMAttributeOperation opr)
+        public async Task ModifyElementAttribute(JsLibDOMAttributeOperation opr)
         {
             if (opr.Identifier == null)
                 return;
 
+			var log = opr.ShowExecutionLog ? FuncMap.ElementModifyAttribute.ToString() : null;
+			var v = await moduleTask.Value;
+            await v.InvokeVoidAsync(FuncMap.ElementModifyAttribute.fn(), (int)opr.Operation, (int)opr.ElementBy ,opr.Identifier, opr.Name, opr.Value, log);
+        }
+
+        public async Task ModifyElementContent(JsLibDOMContentOperation opr)
+        {
+            if (opr.Identifier == null)
+                return;
+
+            var log = opr.ShowExecutionLog ? FuncMap.ElementModifyContent.ToString() : null;
             var v = await moduleTask.Value;
-            await v.InvokeVoidAsync("modAttributeBy", (int)opr.Operation, (int)opr.ElementBy ,opr.Identifier, opr.Name, opr.Value, opr.ShowConsoleLog);
+            await v.InvokeVoidAsync(FuncMap.ElementModifyContent.fn(), (int)opr.Operation, (int)opr.ElementBy, opr.Identifier, (int)opr.ContentType,
+                opr.Content, log);
         }
 
-        public async Task ModifyContent(JsLibDOMContentOperation opr)
-        {
-            if (opr.Identifier == null)
-                return;
-
-                var v = await moduleTask.Value;
-            await v.InvokeVoidAsync("elementAddContent", (int)opr.Operation, (int)opr.ElementBy, opr.Identifier, (int)opr.ContentType,
-                opr.Content, opr.ShowConsoleLog);
-        }
-
-        public async ValueTask<T> ElementGetValue<T>(DOMElementBy elementBy, string identifier)
+        public async ValueTask<T> ElementGetValue<T>(DOMElementBy elementBy, string identifier, bool showLog = false)
         {
             var result = default(T);
 
+            var log = showLog ? FuncMap.ElementGetValue.ToString() : null;
 			var v = await moduleTask.Value;
-			return await v.InvokeAsync<T>("elementGetValue", (int)elementBy, identifier);
+			return await v.InvokeAsync<T>(FuncMap.ElementGetValue.fn(), (int)elementBy, identifier, log);
 		}
 
-		public async Task ElementSetValue(DOMElementBy elementBy, string identifier, object value)
+		public async Task ElementSetValue(DOMElementBy elementBy, string identifier, object value, bool showLog  = false)
 		{
+			var log = showLog ? FuncMap.ElementGetValue.ToString() : null;
 			var v = await moduleTask.Value;
-			await v.InvokeVoidAsync("elementSetValue", (int)elementBy, identifier, value);
+			await v.InvokeVoidAsync(FuncMap.ElementSetValue.fn(), (int)elementBy, identifier, value, log);
 		}
 
 		public async ValueTask DisposeAsync()

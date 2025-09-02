@@ -2,6 +2,6 @@
 {
 	public class JsLibDOMGlobalOptions
 	{
-		public bool ShowConsoleLog { get; set; } = true;
+		public bool ShowExecutionLog { get; set; } = false;
 	}
 }

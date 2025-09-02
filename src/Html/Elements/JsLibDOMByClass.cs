@@ -18,8 +18,8 @@
 			_attrOpr.ElementBy = DOMElementBy.Class;
 
 			_core = core;
-			_classOpr.ShowConsoleLog = options.ShowConsoleLog;
-			_attrOpr.ShowConsoleLog = options.ShowConsoleLog;
+			_classOpr.ShowExecutionLog = options.ShowExecutionLog;
+			_attrOpr.ShowExecutionLog = options.ShowExecutionLog;
 		}
 
 		public string Id
@@ -39,7 +39,7 @@
 			_classOpr.ClassNames = null;
 			_classOpr.ClassName = className;
 
-			await _core.ModifyClass(_classOpr);
+			await _core.ModifyElementClass(_classOpr);
 		}
 
 		public async Task AddClasses(string[] classNames)
@@ -48,7 +48,7 @@
 			_classOpr.ClassName = null;
 			_classOpr.ClassNames = classNames;
 
-			await _core.ModifyClass(_classOpr);
+			await _core.ModifyElementClass(_classOpr);
 		}
 
 		public async Task RemoveClass(string className)
@@ -57,7 +57,7 @@
 			_classOpr.ClassNames = null;
 			_classOpr.ClassName = className;
 
-			await _core.ModifyClass(_classOpr);
+			await _core.ModifyElementClass(_classOpr);
 		}
 
 		public async Task RemoveClasses(string[] classNames)
@@ -66,7 +66,7 @@
 			_classOpr.ClassNames = classNames;
 			_classOpr.ClassName = null;
 
-			await _core.ModifyClass(_classOpr);
+			await _core.ModifyElementClass(_classOpr);
 		}
 
 		public async Task SetAttribute(string name, object? value)
@@ -75,7 +75,7 @@
 			_attrOpr.Name = name;
 			_attrOpr.Value = value;
 
-			await _core.ModifyAttribute(_attrOpr);
+			await _core.ModifyElementAttribute(_attrOpr);
 		}
 	}
 }
