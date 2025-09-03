@@ -7,6 +7,7 @@ namespace Opx.Blazor.JsLibDOM
 	{
 		private readonly JsLibDOMGlobalOptions _options;
 		private readonly JsLibDOMInteropCore _core;
+		private JsLibDOMDoc _doc;
 		private JsLibDOMHead _head;
 		private JsLibDOMBody _body;
 		private JsLibDOMElements _elements;
@@ -15,11 +16,13 @@ namespace Opx.Blazor.JsLibDOM
 		{
 			_options = options;
 			_core = core;
+			_doc = new JsLibDOMDoc(core, options);
 			_head = new JsLibDOMHead(core, _options);
 			_body = new JsLibDOMBody(core, _options);
 			_elements = new JsLibDOMElements(core, _options);
 		}
 
+		public JsLibDOMDoc Doc => _doc;
 		public JsLibDOMHead Head => _head;
 		public JsLibDOMBody Body => _body;
 		public JsLibDOMElements Elements => _elements;

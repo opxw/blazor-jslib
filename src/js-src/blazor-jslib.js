@@ -1,15 +1,17 @@
 
 // console.log
 export function fg0(msg) {
-    if (msg === null || msg.match(/^ *$/) !== null) {
-        console.log(msg);
+    if (msg == null || msg.match(/^ *$/) !== null) {
+        return;
     }
+
+    console.log(msg);
 }
 
 
 /** HTML DOCUMENT */
 export function fd0(op, name, value, log) {
-    var doc = document;
+    var doc = document.documentElement;
     if (op == 0)
         doc.setAttribute(name, value);
     else
