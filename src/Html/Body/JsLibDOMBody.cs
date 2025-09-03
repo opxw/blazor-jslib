@@ -59,12 +59,17 @@ namespace Opx.Blazor.JsLibDOM
 				Options.ShowExecutionLog ? f.ToString() : null);
 		}
 
-		public async Task RemoveAttribute(string name, object value)
+		public async Task RemoveAttribute(string name)
 		{
 			var v = await JS.GetInvoker();
 			var f = FuncMap.BodyModifyAttribute;
 			await v.InvokeVoidAsync(f.fn(), (int)DOMAttributeOperation.Remove, f.fn(), name, null, 
 				Options.ShowExecutionLog ? f.ToString() : null);
+		}
+
+		public async Task ResetClass()
+		{
+			await RemoveAttribute("class");
 		}
 	}
 }

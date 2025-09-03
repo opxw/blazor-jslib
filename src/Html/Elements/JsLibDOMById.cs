@@ -77,6 +77,11 @@
 			await _core.ModifyElementClass(_classOpr);
 		}
 
+		public async Task ResetClass()
+		{
+			await RemoveAttribute("class");
+		}
+
 		public async Task SetAttribute(string name, object? value)
 		{
 			_attrOpr.Operation = DOMAttributeOperation.Set;
