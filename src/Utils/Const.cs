@@ -40,6 +40,9 @@ namespace Opx.Blazor.JsLibDOM
 		ElementGetValue,
 		[Label("fe5")]
 		ElementSetValue,
+
+		[Label("fce0")]
+		AttributeOfElementIdChanged
 	}
 
 	public enum ScriptLocation

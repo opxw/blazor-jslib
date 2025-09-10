@@ -55,7 +55,7 @@ namespace Opx.Blazor.JsLibDOM
 		{
 			var v = await JS.GetInvoker();
 			var f = FuncMap.BodyModifyAttribute;
-			await v.InvokeVoidAsync(f.fn(), (int)DOMAttributeOperation.Set, f.fn(), name, value, 
+			await v.InvokeVoidAsync(f.fn(), (int)DOMAttributeOperation.Set, name, value, 
 				Options.ShowExecutionLog ? f.ToString() : null);
 		}
 
@@ -63,7 +63,7 @@ namespace Opx.Blazor.JsLibDOM
 		{
 			var v = await JS.GetInvoker();
 			var f = FuncMap.BodyModifyAttribute;
-			await v.InvokeVoidAsync(f.fn(), (int)DOMAttributeOperation.Remove, f.fn(), name, null, 
+			await v.InvokeVoidAsync(f.fn(), (int)DOMAttributeOperation.Remove, name, null, 
 				Options.ShowExecutionLog ? f.ToString() : null);
 		}
 

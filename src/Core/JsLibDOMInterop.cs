@@ -1,5 +1,6 @@
 ﻿using FastEnumUtility;
 using Microsoft.JSInterop;
+using Opx.Blazor.JsLibDOM.Utils;
 
 namespace Opx.Blazor.JsLibDOM
 {
@@ -31,6 +32,13 @@ namespace Opx.Blazor.JsLibDOM
 		{
 			var v = await _core.GetInvoker();
 			await v.InvokeVoidAsync(FuncMap.ConsoleLog.GetLabel(), msg);
+		}
+
+		public async Task<IJSObjectReference> InvokeElementIdAttributeChanged(string elementId, string attributeName, string eventName, object sender)
+		{
+			var v = await _core.GetInvoker();
+			var f = FuncMap.AttributeOfElementIdChanged;
+			return await v.InvokeAsync<IJSObjectReference>(f.fn(), elementId, attributeName, eventName, DotNetObjectReference.Create(sender), _options.ShowExecutionLog ? f.ToString() : null);
 		}
 	}
 }

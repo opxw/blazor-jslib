@@ -123,7 +123,6 @@ export function fe0(op, kind, identifier, className, log) {
     }
     fg0(log);
 }
-
 export function fe1(op, kind, identifier, classNames, log) {
     switch (kind) {
         case 1:
@@ -156,7 +155,6 @@ export function fe1(op, kind, identifier, classNames, log) {
     }
     fg0(log);
 }
-
 export function fe2(op, kind, identifier, name, value, log) {
     switch (kind) {
         case 1:
@@ -189,7 +187,6 @@ export function fe2(op, kind, identifier, name, value, log) {
     }
     fg0(log);
 }
-
 export function fe3(op, kind, identifier, contentType, content, log) {
     switch (kind) {
         case 1:
@@ -225,7 +222,6 @@ export function fe3(op, kind, identifier, contentType, content, log) {
     }
     fg0(log);
 }
-
 export function fe4(kind, identifier, log) {
     switch (kind) {
         case 1:
@@ -239,7 +235,6 @@ export function fe4(kind, identifier, log) {
     }
     fg0(log);
 }
-
 export function fe5(kind, identifier, value, log) {
     switch (kind) {
         case 1:
@@ -257,3 +252,29 @@ export function fe5(kind, identifier, value, log) {
     fg0(log);
 }
 
+
+export function fce0(id, attributeName, eventName, dotNetHelper, log) {
+    const node = document.getElementById(id);
+    if (!node)
+        return;
+
+    const observer = new MutationObserver((ml) => {
+        for (const m of ml) {
+            if (m.type === 'attributes' && m.attributeName === attributeName) {
+                dotNetHelper.invokeMethodAsync(eventName, node.getAttribute(attributeName));
+            }
+        }
+    });
+
+    fg0(log);
+
+    observer.observe(node, { attributes: true });
+
+    return observer;
+}
+
+export function fce0a(observer) {
+    if (!observer) {
+        observer.disconnect();
+    }
+}

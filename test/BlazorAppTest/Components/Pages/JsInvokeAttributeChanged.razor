@@ -1,0 +1,45 @@
+﻿@page "/js-invoke-attribute-changed"
+@rendermode RenderMode.InteractiveServer
+@inject JsLibDOMInterop _jsl
+
+<div class="row">
+	<div id="testId" data-test="123">
+		@_msg
+	</div>
+</div>
+
+<div class="row">
+	<div class="col">
+		<button type="button" class="btn btn-success" @onclick=ButtonClicked>
+			Change Atttrib
+		</button>
+	</div>
+</div>
+
+
+
+@code 
+{
+	string _msg = "No changes";
+
+	async Task ButtonClicked()
+	{
+		await _jsl.Elements.ById("testId").SetAttribute("data-test", "HELLO");
+	}
+
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		await base.OnAfterRenderAsync(firstRender);
+
+		if (firstRender)
+		{
+			await _jsl.InvokeElementIdAttributeChanged("testId", "data-test", DotNetObjectReference.Create(this));
+		}
+	}
+
+	[JSInvokable]
+	public void OnElementIdAttributeChanged(string value)
+	{
+		_msg = $"changed to {value}";
+	}
+}
