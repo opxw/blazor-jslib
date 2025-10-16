@@ -40,5 +40,12 @@ namespace Opx.Blazor.JsLibDOM
 			var f = FuncMap.AttributeOfElementIdChanged;
 			return await v.InvokeAsync<IJSObjectReference>(f.fn(), elementId, attributeName, eventName, DotNetObjectReference.Create(sender), _options.ShowExecutionLog ? f.ToString() : null);
 		}
+
+		public async Task<bool> IsDarkMode()
+		{
+			var v = await _core.GetInvoker();
+			var f = FuncMap.IsDarkMode;
+			return await v.InvokeAsync<bool>(f.fn(), _options.ShowExecutionLog ? f.ToString() : null);
+		}
 	}
 }

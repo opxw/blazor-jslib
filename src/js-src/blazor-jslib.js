@@ -278,3 +278,7 @@ export function fce0a(observer) {
         observer.disconnect();
     }
 }
+
+export function fw0() {
+    return window?.matchMedia?.('(prefers-color-scheme:dark)')?.matches ?? false;
+}

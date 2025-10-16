@@ -42,7 +42,10 @@ namespace Opx.Blazor.JsLibDOM
 		ElementSetValue,
 
 		[Label("fce0")]
-		AttributeOfElementIdChanged
+		AttributeOfElementIdChanged,
+
+		[Label("fw0")]
+		IsDarkMode,
 	}
 
 	public enum ScriptLocation
