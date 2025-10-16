@@ -159,7 +159,12 @@
 		</div>
 	</div>
 
-	
+	<div class="row mb-1">
+		<div class="col-lg-12">
+			DarkMode : @IsDarkMode
+			<button type="button" @onclick="CheckIsDarkMode">IsDarkMode ?</button>
+		</div>
+	</div>
 </div>
 
 @code 
@@ -280,5 +285,11 @@
 	async Task SetValue1()
 	{
 		await _jsl.Elements.ById("myId").SetValue("Hello");
+	}
+
+	string IsDarkMode = "unknown";
+	async Task CheckIsDarkMode()
+	{
+		IsDarkMode = (await _jsl.IsDarkMode()) ? "true" : "false";
 	}
 }
