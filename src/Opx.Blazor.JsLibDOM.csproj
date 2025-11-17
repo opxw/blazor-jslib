@@ -6,9 +6,19 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Company>Noviyanto Wibowo</Company>
     <Authors>Noviyanto Wibowo</Authors>
-    <Version>1.0.8</Version>
+    <Version>1.0.10</Version>
     <Copyright>Copyrigt © 2025 Noviyanto Wibowo</Copyright>
     <Description>DOM manipulation</Description>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <WarningLevel>0</WarningLevel>
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <WarningLevel>0</WarningLevel>
+    <DebugType>none</DebugType>
   </PropertyGroup>
 
   <ItemGroup>

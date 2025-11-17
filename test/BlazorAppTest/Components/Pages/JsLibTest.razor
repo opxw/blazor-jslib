@@ -165,6 +165,13 @@
 			<button type="button" @onclick="CheckIsDarkMode">IsDarkMode ?</button>
 		</div>
 	</div>
+
+	<div class="row mb-1">
+		<div id="test-remove-id">Content</div>
+		<div class="col-lg-12">
+			<button type="button" @onclick="RemoveNode">Remove Node</button>
+		</div>
+	</div>
 </div>
 
 @code 
@@ -291,5 +298,10 @@
 	async Task CheckIsDarkMode()
 	{
 		IsDarkMode = (await _jsl.IsDarkMode()) ? "true" : "false";
+	}
+
+	async Task RemoveNode()
+	{
+		await _jsl.Elements.ById("test-remove-id").RemoveNode();
 	}
 }
