@@ -60,6 +60,22 @@ namespace Opx.Blazor.JsLibDOM
             await v.InvokeVoidAsync(FuncMap.ElementModifyAttribute.fn(), (int)opr.Operation, (int)opr.ElementBy ,opr.Identifier, opr.Name, opr.Value, log);
         }
 
+        public async Task RemoveElement(JsLibDOMNodeOperation opr)
+        {
+            var v = await moduleTask.Value;
+			if (opr.Identifier == null)
+				return;
+
+			var log = opr.ShowExecutionLog ? FuncMap.ElementRemoveNode.ToString() : null;
+			try
+            {
+                await v.InvokeVoidAsync(FuncMap.ElementRemoveNode.fn(), (int)opr.ElementBy, opr.Identifier, log);
+            }
+            catch
+            {
+            };
+        }
+
         public async Task ModifyElementContent(JsLibDOMContentOperation opr)
         {
             if (opr.Identifier == null)

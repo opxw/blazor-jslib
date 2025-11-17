@@ -40,6 +40,8 @@ namespace Opx.Blazor.JsLibDOM
 		ElementGetValue,
 		[Label("fe5")]
 		ElementSetValue,
+		[Label("fe6")]
+		ElementRemoveNode,
 
 		[Label("fce0")]
 		AttributeOfElementIdChanged,
@@ -71,6 +73,12 @@ namespace Opx.Blazor.JsLibDOM
 	public enum DOMAttributeOperation
 	{
 		Set = 0,
+		Remove
+	}
+
+	public enum DOMNodeOperation
+	{
+		Add = 0,
 		Remove
 	}
 

@@ -251,6 +251,26 @@ export function fe5(kind, identifier, value, log) {
     }
     fg0(log);
 }
+export function fe6(kind, identifier, log) {
+    switch (kind) {
+        case 1:
+            var els = document.getElementsByName(identifier);
+            for (let i = 0; i < els.length; i++) {
+                const element = els[i];
+                element.remove();
+            }
+            break;
+        case 2:
+            document.getElementsByClassName(identifier).remove();
+            break;
+        case 3:
+            document.getElementsByTagName(identifier).remove();
+            break;
+        default:
+            document.getElementById(identifier).remove();
+    }
+    fg0(log);
+}
 
 
 export function fce0(id, attributeName, eventName, dotNetHelper, log) {
@@ -279,6 +299,7 @@ export function fce0a(observer) {
     }
 }
 
-export function fw0() {
+export function fw0(log) {
+    fg0(log);
     return window?.matchMedia?.('(prefers-color-scheme:dark)')?.matches ?? false;
 }

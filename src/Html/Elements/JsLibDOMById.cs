@@ -1,10 +1,13 @@
-﻿namespace Opx.Blazor.JsLibDOM
+﻿using Opx.Blazor.JsLibDOM.Utils;
+
+namespace Opx.Blazor.JsLibDOM
 {
 	public class JsLibDOMById
 	{
 		private JsLibDOMClassOperation _classOpr = new();
 		private JsLibDOMAttributeOperation _attrOpr = new();
 		private JsLibDOMContentOperation _contentOpr = new();
+		private JsLibDOMNodeOperation _nodeOpr = new();
 		private JsLibDOMInteropCore _core;
 		
 		private string _id = string.Empty;
@@ -18,15 +21,18 @@
 			_classOpr.Identifier = id;
 			_attrOpr.Identifier = id;
 			_contentOpr.Identifier = id;
+			_nodeOpr.Identifier = id;
 
 			_classOpr.ElementBy = DOMElementBy.Id;
 			_attrOpr.ElementBy = DOMElementBy.Id;
 			_contentOpr.ElementBy = DOMElementBy.Id;
+			_nodeOpr.ElementBy = DOMElementBy.Id;
 
 			_core = core;
 			_classOpr.ShowExecutionLog = _globalShowLog;
 			_attrOpr.ShowExecutionLog = _globalShowLog;
 			_contentOpr.ShowExecutionLog = _globalShowLog;
+			_nodeOpr.ShowExecutionLog = _globalShowLog;
 		}
 
 		public string Id
@@ -38,6 +44,7 @@
 				_classOpr.Identifier = _id;
 				_attrOpr.Identifier = _id;
 				_contentOpr.Identifier = _id;
+				_nodeOpr.Identifier = _id;
 			}
 		}
 
@@ -130,6 +137,13 @@
 			_contentOpr.ContentType = DOMContentType.InnerHTML;
 
 			await _core.ModifyElementContent(_contentOpr);
+		}
+
+		public async Task RemoveNode()
+		{
+			_nodeOpr.Operation = DOMNodeOperation.Remove;
+
+			await _core.RemoveElement(_nodeOpr);
 		}
 
 		public async ValueTask<T> GetValue<T>()
